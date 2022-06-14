@@ -77,7 +77,7 @@ type Props = {
   children: React.ReactNode
   title: string
 }
-function AdminLayout({ children, title }: Props) {
+function AdminLayout({ children, title }: Props): JSX.Element | null {
   const { login, getUser } = useAuth()
   const router = useRouter()
 
@@ -105,10 +105,10 @@ function AdminLayout({ children, title }: Props) {
         router.push("/login")
       }
     })()
-  }, [])
+  }, [getUser,router])
 
   if (!user || loading) {
-    return 
+    return null
   }
   return (
     <ThemeProvider theme={mdTheme}>

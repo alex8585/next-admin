@@ -4,19 +4,16 @@ import Image from "next/image"
 import styles from "../styles/Home.module.css"
 import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
-import useAuth from "@/hooks/auth"
 import { useRouter } from "next/router"
 
 import React, { useState, useEffect } from "react"
-const Logout: ()=>void = () => {
-  const { logout } = useAuth()
+const Home: () => void = () => {
   const router = useRouter()
   useEffect(() => {
     ;(async () => {
-      await logout()
-      router.push("/login")
+      router.push("/dashboard")
     })()
-  }, [logout,router])
+  }, [router])
 }
 
-export default Logout
+export default Home

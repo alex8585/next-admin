@@ -37,7 +37,7 @@ function Copyright(props: any) {
 
 const theme = createTheme()
 
-const Login: NextPage = () => {
+const Login: NextPage | null = () => {
   const { login, getUser } = useAuth()
   const router = useRouter()
 
@@ -72,10 +72,10 @@ const Login: NextPage = () => {
       }
     }
     fetchUser()
-  }, [])
+  }, [getUser,router,user])
 
   if (user || loading) {
-    return
+    return null
   }
   return (
     <ThemeProvider theme={theme}>
