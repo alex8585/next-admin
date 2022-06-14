@@ -105,7 +105,7 @@ function AdminLayout({ children, title }: Props): JSX.Element | null {
         router.push("/login")
       }
     })()
-  }, [getUser,router])
+  }, [router])// eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user || loading) {
     return null
