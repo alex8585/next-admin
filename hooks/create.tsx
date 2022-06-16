@@ -16,7 +16,6 @@ export default function useCreate(url: string,doQuery:() => Promise<void>) {
   }
 
   const handleCreateSubmit = (values: { name: string }) => {
-    console.log(values)
     axiosClient
       .post(url, values)
       .then(function (res) {

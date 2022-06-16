@@ -8,21 +8,21 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { useState, useEffect, useMemo } from "react"
 import Alert from "@mui/material/Alert"
-type EditFromProps = {
+type DeleteFormProps = {
   open: boolean
   errors: ErrorsObj
   handleClose: React.MouseEventHandler<HTMLButtonElement>
-  handleSubmit: (values: { name: string }) => any
-  currentRow: any
+  handleSubmit: () => any
+  deletingRow: any
 }
 
-const CreateForm = ({
+const DeleteForm = ({
   open,
   errors,
   handleClose,
   handleSubmit,
-  currentRow,
-}: EditFromProps) => {
+  deletingRow,
+}: DeleteFormProps) => {
   const initState = useMemo(() => ({ name: "" }), [])
   const [values, setValues] = useState({ ...initState })
 
@@ -35,37 +35,23 @@ const CreateForm = ({
     }))
   }
 
-  useEffect(() => {
-    if (currentRow) {
-      setValues({ ...currentRow })
-    }
-  }, [currentRow])
-
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit tag</DialogTitle>
+        <DialogTitle>Delete category</DialogTitle>
         <div>
           {errors?.global && <Alert severity="error">{errors.global}</Alert>}
         </div>
         <DialogContent>
-          <OutlinedInput
-            error={errors?.name ? true : false}
-            name="name"
-            value={values.name}
-            onChange={handleChange}
-            id="name"
-            label="Name"
-            helperText={errors.name && errors.name[0]}
-          />
+          Are you shore you want to delete &quot; {deletingRow?.name} &quot; ?
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => handleSubmit(values)}>Save</Button>
+          <Button onClick={() => handleSubmit()}>Delete</Button>
         </DialogActions>
       </Dialog>
     </div>
   )
 }
 // CreateForm.displayName = "CreateFrom"
-export default CreateForm
+export default DeleteForm

@@ -57,7 +57,7 @@ const CreateForm = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => handleSubmit(values)}>Submit</Button>
+          <Button onClick={() => handleSubmit(values)}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -1,17 +1,12 @@
 import type { NextPage } from "next"
-import Head from "next/head"
-import Image from "next/image"
-import styles from "../styles/Home.module.css"
-import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
 import AdminLayout from "@/layout/AdminLayout"
-import React, { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableContainer from "@mui/material/TableContainer"
 import Paper from "@mui/material/Paper"
 import TablePagination from "@mui/material/TablePagination"
-import Checkbox from "@mui/material/Checkbox"
 import EnhancedTableHead, { HeadCells } from "@/components/EnhancedTableHead"
 import TableRow from "@mui/material/TableRow"
 import usePaginateAndSort from "@/hooks/paginateAndSort"
@@ -86,7 +81,7 @@ const Tags: NextPage | null = () => {
   if (!items) return null
   return (
     <AdminLayout title="Tags">
-        <Button sx={{mb: 1}} variant="contained" onClick={handleCreateOpen}>
+      <Button sx={{ mb: 1 }} variant="contained" onClick={handleCreateOpen}>
         Create
       </Button>
       <TableContainer component={Paper}>
@@ -108,10 +103,18 @@ const Tags: NextPage | null = () => {
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">
-                  <Button variant="text" size="small" onClick={() => handleEditOpen(row)}>
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => handleEditOpen(row)}
+                  >
                     Edit
                   </Button>
-                  <Button variant="text" size="small" onClick={() => handleDeleteOpen(row)}>
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => handleDeleteOpen(row)}
+                  >
                     Delete
                   </Button>
                 </TableCell>

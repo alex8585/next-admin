@@ -8,12 +8,11 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { useState, useEffect, useMemo } from "react"
 import Alert from "@mui/material/Alert"
-type EditFromProps = {
+type CreateFromProps = {
   open: boolean
   errors: ErrorsObj
   handleClose: React.MouseEventHandler<HTMLButtonElement>
   handleSubmit: (values: { name: string }) => any
-  currentRow: any
 }
 
 const CreateForm = ({
@@ -21,8 +20,8 @@ const CreateForm = ({
   errors,
   handleClose,
   handleSubmit,
-  currentRow,
-}: EditFromProps) => {
+}: CreateFromProps) => {
+
   const initState = useMemo(() => ({ name: "" }), [])
   const [values, setValues] = useState({ ...initState })
 
@@ -36,15 +35,12 @@ const CreateForm = ({
   }
 
   useEffect(() => {
-    if (currentRow) {
-      setValues({ ...currentRow })
-    }
-  }, [currentRow])
-
+    setValues({ ...initState })
+  }, [open, initState])
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit tag</DialogTitle>
+        <DialogTitle>Create category</DialogTitle>
         <div>
           {errors?.global && <Alert severity="error">{errors.global}</Alert>}
         </div>

@@ -44,7 +44,7 @@ const CreateForm = ({
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Edit tag</DialogTitle>
+        <DialogTitle>Edit category</DialogTitle>
         <div>
           {errors?.global && <Alert severity="error">{errors.global}</Alert>}
         </div>
