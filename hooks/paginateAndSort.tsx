@@ -1,6 +1,6 @@
 import { HeadCells, Order } from "@/components/EnhancedTableHead"
 import { fetchMany } from "@/support/query"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect,useCallback } from "react"
 interface ItemsType {
   data: []
   metaData: { rowsNumber: number }
@@ -12,22 +12,24 @@ export default function usePaginateAndSort(url: string) {
   const [order, setOrder] = useState<Order>("asc")
   const [orderBy, setOrderBy] = useState("id")
 
+    
+  const doQuery = useCallback(async () => {
+    let filter = {}
+    let descending = order == "asc" ? true : false
+    let res = await fetchMany(
+      url,
+      page + 1,
+      rowsPerPage,
+      orderBy,
+      descending,
+      filter
+    )
+    setItems(res.data)
+  },[url, page, rowsPerPage, orderBy, order])
+
   useEffect(() => {
-    const fetchUser = async () => {
-      let filter = {}
-      let descending = order == "asc" ? true : false
-      let res = await fetchMany(
-        url,
-        page + 1,
-        rowsPerPage,
-        orderBy,
-        descending,
-        filter
-      )
-      setItems(res.data)
-    }
-    fetchUser()
-  }, [url, page, rowsPerPage, orderBy, order])
+    doQuery()
+  }, [url, page, rowsPerPage, orderBy, order,doQuery])
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -58,5 +60,6 @@ export default function usePaginateAndSort(url: string) {
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
+    doQuery,
   }
 }

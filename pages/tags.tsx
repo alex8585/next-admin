@@ -5,7 +5,7 @@ import styles from "../styles/Home.module.css"
 import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
 import AdminLayout from "@/layout/AdminLayout"
-import React, { useState, useEffect } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableContainer from "@mui/material/TableContainer"
@@ -16,6 +16,13 @@ import EnhancedTableHead, { HeadCells } from "@/components/EnhancedTableHead"
 import TableRow from "@mui/material/TableRow"
 import usePaginateAndSort from "@/hooks/paginateAndSort"
 import TableCell from "@mui/material/TableCell"
+import CreateForm from "@/components/tags/CreateForm"
+import EditForm from "@/components/tags/EditForm"
+import DeleteForm from "@/components/tags/DeleteForm"
+import axiosClient from "@/support/axiosClient"
+import useCreate from "@/hooks/create"
+import useEdit from "@/hooks/edit"
+import useDelete from "@/hooks/delete"
 
 const headCells: HeadCells = [
   {
@@ -25,6 +32,11 @@ const headCells: HeadCells = [
   {
     id: "name",
     label: "Name",
+  },
+  {
+    id: "actions",
+    label: "Actions",
+    sort: false,
   },
 ]
 
@@ -39,11 +51,44 @@ const Tags: NextPage | null = () => {
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
+    doQuery,
   } = usePaginateAndSort(url)
 
-  if (!items) return null 
+  const {
+    createOpen,
+    createErrors,
+    handleCreateOpen,
+    handleCreateClose,
+    handleCreateSubmit,
+  } = useCreate(url, doQuery)
+
+  const {
+    editOpen,
+    setEditOpen,
+    editErrors,
+    setEditErrors,
+    handleEditOpen,
+    handleEditClose,
+    handleEditSubmit,
+    currentRow,
+  } = useEdit(url, doQuery)
+
+  const {
+    deletingRow,
+    deleteOpen,
+    setDeleteOpen,
+    deleteErrors,
+    setDeleteErrors,
+    handleDeleteOpen,
+    handleDeleteClose,
+    handleDeleteSubmit,
+  } = useDelete(url, doQuery)
+  if (!items) return null
   return (
     <AdminLayout title="Tags">
+        <Button sx={{mb: 1}} variant="contained" onClick={handleCreateOpen}>
+        Create
+      </Button>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
@@ -62,6 +107,14 @@ const Tags: NextPage | null = () => {
                   {row.id}
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="left">
+                  <Button variant="text" size="small" onClick={() => handleEditOpen(row)}>
+                    Edit
+                  </Button>
+                  <Button variant="text" size="small" onClick={() => handleDeleteOpen(row)}>
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -75,6 +128,26 @@ const Tags: NextPage | null = () => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <CreateForm
+        open={createOpen}
+        errors={createErrors}
+        handleClose={handleCreateClose}
+        handleSubmit={handleCreateSubmit}
+      />
+      <EditForm
+        currentRow={currentRow}
+        open={editOpen}
+        errors={editErrors}
+        handleClose={handleEditClose}
+        handleSubmit={handleEditSubmit}
+      />
+      <DeleteForm
+        deletingRow={deletingRow}
+        open={deleteOpen}
+        errors={deleteErrors}
+        handleClose={handleDeleteClose}
+        handleSubmit={handleDeleteSubmit}
       />
     </AdminLayout>
   )
