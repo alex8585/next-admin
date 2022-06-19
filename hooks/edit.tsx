@@ -19,7 +19,7 @@ export default function useEdit(url: string,doQuery:() => Promise<void>) {
     setEditOpen(false)
   }
 
-  const handleEditSubmit = (values: { name: string }) => {
+  const handleEditSubmit = (values: any) => {
     if(!currentRow) return
     axiosClient
           .put(url+'/'+currentRow?.id, values)

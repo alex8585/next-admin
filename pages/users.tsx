@@ -17,6 +17,13 @@ import TableRow from "@mui/material/TableRow"
 import usePaginateAndSort from "@/hooks/paginateAndSort"
 import TableCell from "@mui/material/TableCell"
 
+import CreateForm from "@/components/users/CreateForm"
+import EditForm from "@/components/users/EditForm"
+import DeleteForm from "@/components/users/DeleteForm"
+import useCreate from "@/hooks/create"
+import useEdit from "@/hooks/edit"
+import useDelete from "@/hooks/delete"
+
 const headCells: HeadCells = [
   {
     id: "id",
@@ -29,6 +36,11 @@ const headCells: HeadCells = [
   {
     id: "email",
     label: "Email",
+  },
+  {
+    id: "actions",
+    label: "Actions",
+    sort: false,
   },
 ]
 
@@ -43,11 +55,45 @@ const Users: NextPage | null = () => {
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
+    doQuery,
   } = usePaginateAndSort(url)
 
+  const {
+    createOpen,
+    createErrors,
+    handleCreateOpen,
+    handleCreateClose,
+    handleCreateSubmit,
+  } = useCreate(url, doQuery)
+
+  const {
+    editOpen,
+    setEditOpen,
+    editErrors,
+    setEditErrors,
+    handleEditOpen,
+    handleEditClose,
+    handleEditSubmit,
+    currentRow,
+  } = useEdit(url, doQuery)
+
+  const {
+    deletingRow,
+    deleteOpen,
+    setDeleteOpen,
+    deleteErrors,
+    setDeleteErrors,
+    handleDeleteOpen,
+    handleDeleteClose,
+    handleDeleteSubmit,
+  } = useDelete(url, doQuery)
   if (!items) return null
   return (
     <AdminLayout title="Users">
+      <Button sx={{ mb: 1 }} variant="contained" onClick={handleCreateOpen}>
+        Create
+      </Button>
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
@@ -67,6 +113,22 @@ const Users: NextPage | null = () => {
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
+                <TableCell align="left">
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => handleEditOpen(row)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => handleDeleteOpen(row)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -80,6 +142,26 @@ const Users: NextPage | null = () => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <CreateForm
+        open={createOpen}
+        errors={createErrors}
+        handleClose={handleCreateClose}
+        handleSubmit={handleCreateSubmit}
+      />
+      <EditForm
+        currentRow={currentRow}
+        open={editOpen}
+        errors={editErrors}
+        handleClose={handleEditClose}
+        handleSubmit={handleEditSubmit}
+      />
+      <DeleteForm
+        deletingRow={deletingRow}
+        open={deleteOpen}
+        errors={deleteErrors}
+        handleClose={handleDeleteClose}
+        handleSubmit={handleDeleteSubmit}
       />
     </AdminLayout>
   )

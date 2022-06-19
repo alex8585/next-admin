@@ -14,11 +14,9 @@ import TableCell from "@mui/material/TableCell"
 import CreateForm from "@/components/tags/CreateForm"
 import EditForm from "@/components/tags/EditForm"
 import DeleteForm from "@/components/tags/DeleteForm"
-import axiosClient from "@/support/axiosClient"
 import useCreate from "@/hooks/create"
 import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
-
 const headCells: HeadCells = [
   {
     id: "id",
@@ -78,7 +76,8 @@ const Tags: NextPage | null = () => {
     handleDeleteClose,
     handleDeleteSubmit,
   } = useDelete(url, doQuery)
-  if (!items) return null
+   if (!items) return null
+
   return (
     <AdminLayout title="Tags">
       <Button sx={{ mb: 1 }} variant="contained" onClick={handleCreateOpen}>

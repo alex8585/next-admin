@@ -15,7 +15,7 @@ export default function useCreate(url: string,doQuery:() => Promise<void>) {
     setCreateOpen(false)
   }
 
-  const handleCreateSubmit = (values: { name: string }) => {
+  const handleCreateSubmit = (values: any) => {
     axiosClient
       .post(url, values)
       .then(function (res) {
