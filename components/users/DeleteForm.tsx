@@ -23,17 +23,6 @@ const DeleteForm = ({
   handleSubmit,
   deletingRow,
 }: DeleteFormProps) => {
-  const initState = useMemo(() => ({ name: "" }), [])
-  const [values, setValues] = useState({ ...initState })
-
-  function handleChange(e: any) {
-    const key = e.target.name
-    const value = e.target.value
-    setValues((values) => ({
-      ...values,
-      [key]: value,
-    }))
-  }
 
   return (
     <div>
@@ -53,5 +42,4 @@ const DeleteForm = ({
     </div>
   )
 }
-// CreateForm.displayName = "CreateFrom"
 export default DeleteForm

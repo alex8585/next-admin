@@ -12,6 +12,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
+import useChangeForm from "@/hooks/formChange"
+
 type CreateFromProps = {
   tags: Array<any>
   cats: Array<any>
@@ -47,21 +49,14 @@ const CreateForm = ({
     }),
     []
   )
-  const [values, setValues] = useState({ ...initState })
   const [selectedTags, setSelectedTags] = useState([])
-  function handleChange(e: any) {
-    const key = e.target.name
-    const value = e.target.value
-    setValues((values) => ({
-      ...values,
-      [key]: value,
-    }))
-  }
+
+  const { handleChange, values, setValues } = useChangeForm(initState)
 
   function handleChangeCat(e: any) {
     const value = e.target.value
     let category = { value }
-    setValues((values) => ({
+    setValues((values: any) => ({
       ...values,
       category,
     }))
@@ -70,16 +65,15 @@ const CreateForm = ({
   function handleChangeTags(e: any) {
     const newTags = e.target.value
 
-    setValues((values) => ({
-        ...values,
-        tags: [...newTags],
-
+    setValues((values: any) => ({
+      ...values,
+      tags: [...newTags],
     }))
   }
 
   useEffect(() => {
     setValues({ ...initState })
-  }, [open, initState])
+  }, [open, initState, setValues])
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -87,10 +81,10 @@ const CreateForm = ({
         <div>
           {errors?.global && <Alert severity="error">{errors.global}</Alert>}
         </div>
-        <DialogContent>
+        <DialogContent sx={{ minWidth: 500 }}>
           <div>
             <OutlinedInput
-              sx={{ mb: 1 }}
+              sx={{ mb: 1, width: '100%' }}
               error={errors?.title ? true : false}
               name="title"
               value={values.title}
@@ -102,7 +96,7 @@ const CreateForm = ({
           </div>
           <div>
             <OutlinedInput
-              sx={{ mb: 1 }}
+                sx={{ mb: 1,width:'100%'  }}
               error={errors?.description ? true : false}
               name="description"
               value={values.description}
@@ -112,8 +106,8 @@ const CreateForm = ({
               helperText={errors.description && errors.description[0]}
             />
           </div>
-          <div>
-            <FormControl sx={{ mt: 1, width: 200 }}>
+          <div className='form-row' >
+            <FormControl sx={{ mt: 1, width: 180 }}>
               <InputLabel id="select-label-cat">Category</InputLabel>
               <Select
                 sx={{ minWidth: 30 }}
@@ -131,9 +125,7 @@ const CreateForm = ({
                 ))}
               </Select>
             </FormControl>
-          </div>
-          <div>
-            <FormControl sx={{ mt: 1, width: 200 }}>
+            <FormControl sx={{ mt: 1, width: 180 }}>
               <InputLabel id="select-label-tags">Tags</InputLabel>
               <Select
                 multiple
@@ -152,7 +144,8 @@ const CreateForm = ({
                 ))}
               </Select>
             </FormControl>
-          </div>
+                      </div>
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

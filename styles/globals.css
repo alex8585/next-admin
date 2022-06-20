@@ -23,3 +23,9 @@ div.Mui-disabled.MuiListItem-button.active  {
 .MuiButton-root.MuiButton-outlined {
     color: #fff;
 }
+
+.form-row {
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+}

@@ -8,6 +8,9 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { useState, useEffect, useMemo } from "react"
 import Alert from "@mui/material/Alert"
+
+import useChangeForm from "@/hooks/formChange"
+
 type EditFromProps = {
   open: boolean
   errors: ErrorsObj
@@ -24,22 +27,13 @@ const CreateForm = ({
   currentRow,
 }: EditFromProps) => {
   const initState = useMemo(() => ({ name: "" }), [])
-  const [values, setValues] = useState({ ...initState })
-
-  function handleChange(e: any) {
-    const key = e.target.name
-    const value = e.target.value
-    setValues((values) => ({
-      ...values,
-      [key]: value,
-    }))
-  }
+  const { handleChange, values, setValues } = useChangeForm(initState)
 
   useEffect(() => {
     if (currentRow) {
       setValues({ ...currentRow })
     }
-  }, [currentRow])
+  }, [currentRow, setValues])
 
   return (
     <div>
@@ -48,8 +42,9 @@ const CreateForm = ({
         <div>
           {errors?.global && <Alert severity="error">{errors.global}</Alert>}
         </div>
-        <DialogContent>
+        <DialogContent sx={{ minWidth: 500 }}>
           <OutlinedInput
+            sx={{ width: "100%" }}
             error={errors?.name ? true : false}
             name="name"
             value={values.name}

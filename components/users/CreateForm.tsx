@@ -8,6 +8,8 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { useState, useEffect, useMemo } from "react"
 import Alert from "@mui/material/Alert"
+import useChangeForm from "@/hooks/formChange"
+
 type CreateFromProps = {
   open: boolean
   errors: ErrorsObj
@@ -33,20 +35,12 @@ const CreateForm = ({
     }),
     []
   )
-  const [values, setValues] = useState({ ...initState })
 
-  function handleChange(e: any) {
-    const key = e.target.name
-    const value = e.target.value
-    setValues((values) => ({
-      ...values,
-      [key]: value,
-    }))
-  }
+  const { handleChange, values, setValues } = useChangeForm(initState)
 
   useEffect(() => {
     setValues({ ...initState })
-  }, [open, initState])
+  }, [open, initState, setValues])
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -54,10 +48,10 @@ const CreateForm = ({
         <div>
           {errors?.global && <Alert severity="error">{errors.global}</Alert>}
         </div>
-        <DialogContent>
+        <DialogContent sx={{ width: 500 }}>
           <div>
             <OutlinedInput
-              sx={{ mb: 1 }}
+              sx={{ mb: 1, width: "100%" }}
               error={errors?.name ? true : false}
               name="name"
               value={values.name}
@@ -69,7 +63,7 @@ const CreateForm = ({
           </div>
           <div>
             <OutlinedInput
-              sx={{ mb: 1 }}
+              sx={{ mb: 1, width: "100%" }}
               error={errors?.email ? true : false}
               name="email"
               value={values.email}
@@ -82,7 +76,7 @@ const CreateForm = ({
           <div>
             <OutlinedInput
               type="password"
-              sx={{ mb: 1 }}
+              sx={{ mb: 1, width: "100%" }}
               error={errors?.password ? true : false}
               name="password"
               value={values.password}

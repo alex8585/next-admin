@@ -23,7 +23,7 @@ const DeleteForm = ({
   handleSubmit,
   deletingRow,
 }: DeleteFormProps) => {
-  const initState = useMemo(() => ({ title: "" }), [])
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
