@@ -17,24 +17,21 @@ import DeleteForm from "@/components/tags/DeleteForm"
 import useCreate from "@/hooks/create"
 import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
+import useActionsHead from "@/hooks/actionsHead"
 import ActionsCell from "@/components/ActionsCell"
-const headCells: HeadCells = [
-  {
-    id: "id",
-    label: "ID",
-  },
-  {
-    id: "name",
-    label: "Name",
-  },
-  {
-    id: "actions",
-    label: "Actions",
-    sort: false,
-  },
-]
 
 const Tags: NextPage | null = () => {
+  let headCells: HeadCells = [
+    {
+      id: "id",
+      label: "ID",
+    },
+    {
+      id: "name",
+      label: "Name",
+    },
+  ]
+
   const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/tags"
   const {
     items,
@@ -77,13 +74,22 @@ const Tags: NextPage | null = () => {
     handleDeleteClose,
     handleDeleteSubmit,
   } = useDelete(url, doQuery)
+
+  let canCreate = items?.metaData.can_create ?? false
+  let canDelete = items?.metaData.can_delete ?? false
+  let canUpdate = items?.metaData.can_update ?? false
+
+  headCells = useActionsHead(items, headCells)
+
   if (!items) return null
 
   return (
     <AdminLayout title="Tags">
-      <Button sx={{ mb: 1 }} variant="contained" onClick={handleCreateOpen}>
-        Create
-      </Button>
+      {canCreate && (
+        <Button sx={{ mb: 1 }} variant="contained" onClick={handleCreateOpen}>
+          Create
+        </Button>
+      )}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
@@ -103,6 +109,8 @@ const Tags: NextPage | null = () => {
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <ActionsCell
+                  canDelete={canDelete}
+                  canUpdate={canUpdate}
                   row={row}
                   handleEditOpen={handleEditOpen}
                   handleDeleteOpen={handleDeleteOpen}

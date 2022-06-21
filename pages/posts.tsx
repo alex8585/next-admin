@@ -25,29 +25,26 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import { fetchAll } from "@/support/query"
 
+import useActionsHead from "@/hooks/actionsHead"
 import ActionsCell from "@/components/ActionsCell"
-const headCells: HeadCells = [
-  {
-    id: "id",
-    label: "ID",
-  },
-  {
-    id: "title",
-    label: "Title",
-  },
-  {
-    id: "description",
-    label: "Description",
-    sort: false,
-  },
-  {
-    id: "actions",
-    label: "Actions",
-    sort: false,
-  },
-]
 
 const Posts: NextPage | null = () => {
+  let headCells: HeadCells = [
+    {
+      id: "id",
+      label: "ID",
+    },
+    {
+      id: "title",
+      label: "Title",
+    },
+    {
+      id: "description",
+      label: "Description",
+      sort: false,
+    },
+  ]
+
   const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/posts"
   const {
     items,
@@ -107,12 +104,20 @@ const Posts: NextPage | null = () => {
     })
   }, [])
 
+  let canCreate = items?.metaData.can_create ?? false
+  let canDelete = items?.metaData.can_delete ?? false
+  let canUpdate = items?.metaData.can_update ?? false
+
+  headCells = useActionsHead(items, headCells)
+
   if (!items) return null
   return (
     <AdminLayout title="Posts">
-      <Button sx={{ mb: 1 }} variant="contained" onClick={handleCreateOpen}>
-        Create
-      </Button>
+      {canCreate && (
+        <Button sx={{ mb: 1 }} variant="contained" onClick={handleCreateOpen}>
+          Create
+        </Button>
+      )}
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -132,6 +137,8 @@ const Posts: NextPage | null = () => {
                 <TableCell>{row.title}</TableCell>
                 <TableCell>{row.description}</TableCell>
                 <ActionsCell
+                  canDelete={canDelete}
+                  canUpdate={canUpdate}
                   row={row}
                   handleEditOpen={handleEditOpen}
                   handleDeleteOpen={handleDeleteOpen}

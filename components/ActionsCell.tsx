@@ -11,19 +11,30 @@ interface Props {
   handleEditOpen: (row: any) => void
   handleDeleteOpen: (row: any) => void
   row: any
+  canDelete: boolean
+  canUpdate: boolean
 }
 
 function ActionsCell(props: Props) {
-  const { handleEditOpen, handleDeleteOpen,row } = props
+  const { canDelete, canUpdate, handleEditOpen, handleDeleteOpen, row } = props
 
+  if (!canUpdate && !canDelete) return null
   return (
     <TableCell align="left">
-      <Button variant="text" size="small" onClick={() => handleEditOpen(row)}>
-        Edit
-      </Button>
-      <Button variant="text" size="small" onClick={() => handleDeleteOpen(row)}>
-        Delete
-      </Button>
+      {canUpdate && (
+        <Button variant="text" size="small" onClick={() => handleEditOpen(row)}>
+          Edit
+        </Button>
+      )}
+      {canDelete && (
+        <Button
+          variant="text"
+          size="small"
+          onClick={() => handleDeleteOpen(row)}
+        >
+          Delete
+        </Button>
+      )}
     </TableCell>
   )
 }
