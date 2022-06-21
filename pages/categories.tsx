@@ -19,6 +19,8 @@ import useDelete from "@/hooks/delete"
 import CreateForm from "@/components/categories/CreateForm"
 import EditForm from "@/components/categories/EditForm"
 import DeleteForm from "@/components/categories/DeleteForm"
+import ActionsCell from "@/components/ActionsCell"
+
 const headCells: HeadCells = [
   {
     id: "id",
@@ -104,22 +106,11 @@ const Categories: NextPage | null = () => {
                   {row.id}
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => handleEditOpen(row)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => handleDeleteOpen(row)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
+                <ActionsCell
+                  row={row}
+                  handleEditOpen={handleEditOpen}
+                  handleDeleteOpen={handleDeleteOpen}
+                />
               </TableRow>
             ))}
           </TableBody>

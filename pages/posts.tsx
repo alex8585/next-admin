@@ -25,6 +25,7 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import { fetchAll } from "@/support/query"
 
+import ActionsCell from "@/components/ActionsCell"
 const headCells: HeadCells = [
   {
     id: "id",
@@ -130,22 +131,11 @@ const Posts: NextPage | null = () => {
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.title}</TableCell>
                 <TableCell>{row.description}</TableCell>
-                <TableCell align="left">
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => handleEditOpen(row)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => handleDeleteOpen(row)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
+                <ActionsCell
+                  row={row}
+                  handleEditOpen={handleEditOpen}
+                  handleDeleteOpen={handleDeleteOpen}
+                />
               </TableRow>
             ))}
           </TableBody>

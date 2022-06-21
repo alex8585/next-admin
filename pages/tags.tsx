@@ -17,6 +17,7 @@ import DeleteForm from "@/components/tags/DeleteForm"
 import useCreate from "@/hooks/create"
 import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
+import ActionsCell from "@/components/ActionsCell"
 const headCells: HeadCells = [
   {
     id: "id",
@@ -76,7 +77,7 @@ const Tags: NextPage | null = () => {
     handleDeleteClose,
     handleDeleteSubmit,
   } = useDelete(url, doQuery)
-   if (!items) return null
+  if (!items) return null
 
   return (
     <AdminLayout title="Tags">
@@ -101,22 +102,11 @@ const Tags: NextPage | null = () => {
                   {row.id}
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => handleEditOpen(row)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="text"
-                    size="small"
-                    onClick={() => handleDeleteOpen(row)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
+                <ActionsCell
+                  row={row}
+                  handleEditOpen={handleEditOpen}
+                  handleDeleteOpen={handleDeleteOpen}
+                />
               </TableRow>
             ))}
           </TableBody>
