@@ -21,8 +21,16 @@ div.Mui-disabled.MuiListItem-button.active  {
 }
 
 .MuiButton-root.MuiButton-outlined {
-    color: #fff;
+    margin-right:5px;
+    margin-bottom:5px;
+    /* color: #fff; */
 }
+
+
+.MuiToolbar-root .MuiButton-root.MuiButton-outlined {
+        color: #fff;
+} 
+
 
 .form-row {
     width:100%;

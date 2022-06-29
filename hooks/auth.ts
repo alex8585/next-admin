@@ -6,7 +6,7 @@ export default function useAuth() {
   const [user, setUser] = useState(null)
   const [isLoged, setIsLoged] = useState(false)
   const login = async (email: string, password: string) => {
-    const result: { error?: boolean; msg?: string | {}; token?: string } = {}
+    const result: { error?: boolean; msg?: ErrorsObj | {}; token?: string } = {}
 
     try {
       const resp = await axiosClient.post(`${url}/login`, {
@@ -25,7 +25,7 @@ export default function useAuth() {
       setIsLoged(false)
       result.error = true
       if (error.response.status == 401) {
-        result.msg = { email: ["Incorrect login or password"] }
+        result.msg = { global: ["Incorrect login or password"] }
       } else {
         result.msg = error.response.data.errors
       }
@@ -34,7 +34,7 @@ export default function useAuth() {
   }
 
   const register = async (email: string, password: string) => {
-    const result: { error?: boolean; msg?: string; token?: string } = {}
+    const result: { error?: boolean; msg?: ErrorsObj; token?: string } = {}
 
     try {
       const resp = await axiosClient.post(`${url}/register`, {

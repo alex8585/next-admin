@@ -16,10 +16,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
+import React, { useMemo, useState, useEffect } from "react"
 import useAuth from "@/hooks/auth"
 import { useRouter } from "next/router"
 import useChangeForm from "@/hooks/formChange"
-import React, { useMemo, useState, useEffect } from "react"
 
 import Alert from "@mui/material/Alert"
 function Copyright(props: any) {
@@ -40,15 +40,17 @@ function Copyright(props: any) {
 
 const theme = createTheme()
 
-const Login: NextPage | null = () => {
-  const { login, getUser } = useAuth()
+const Register: NextPage | null = () => {
+  const { register, getUser } = useAuth()
   const router = useRouter()
+
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const initState = useMemo(() => ({ email: "", password: "" }), [])
 
   const [errors, setErrors] = useState<ErrorsObj>({})
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+
   const { handleChange, values, setValues } = useChangeForm(initState)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -56,11 +58,11 @@ const Login: NextPage | null = () => {
     // const data = new FormData(event.currentTarget)
     // let email = data.get("email") as string
     // let pass = data.get("password") as string
-    const res = await login(values.email, values.password)
+    const res = await register(values.email, values.password)
     if (res.error) {
       if (res.msg) {
-        console.log(res.msg)
         setErrors(res.msg)
+        console.log(res.msg)
       }
     } else {
       router.push("/dashboard")
@@ -102,7 +104,7 @@ const Login: NextPage | null = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Register
           </Typography>
           <Box
             component="form"
@@ -110,17 +112,15 @@ const Login: NextPage | null = () => {
             noValidate
             sx={{ mt: 1 }}
           >
-            <div>
-              {errors?.global && (
-                <Alert severity="error">{errors.global}</Alert>
-              )}
-            </div>
+              <div>
+          {errors?.global && <Alert severity="error">{errors.global}</Alert>}
+        </div>
 
             <TextField
-              value={values.email}
-              onChange={handleChange}
               error={errors?.email ? true : false}
               helperText={errors.email && errors.email[0]}
+              value={values.email}
+              onChange={handleChange}
               margin="normal"
               required
               fullWidth
@@ -131,10 +131,10 @@ const Login: NextPage | null = () => {
               autoFocus
             />
             <TextField
-              value={values.password}
-              onChange={handleChange}
               error={errors?.password ? true : false}
               helperText={errors.password && errors.password[0]}
+              value={values.password}
+              onChange={handleChange}
               margin="normal"
               required
               fullWidth
@@ -150,20 +150,8 @@ const Login: NextPage | null = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Login
+              Register
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
@@ -172,4 +160,4 @@ const Login: NextPage | null = () => {
   )
 }
 
-export default Login
+export default Register

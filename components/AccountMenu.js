@@ -23,7 +23,7 @@ export default function AccountMenu() {
   // } = usePage().props
 
   return (
-    <div className={'classes.menu'}>
+    <div >
       <Button
         id="basic-button"
         aria-controls="basic-menu"

@@ -122,7 +122,6 @@ function AdminLayout({ children, title }: Props): JSX.Element | null {
           >
             <IconButton
               edge="start"
-              color="inherit"
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
