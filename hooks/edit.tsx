@@ -10,7 +10,18 @@ export default function useEdit(url: string,doQuery:() => Promise<void>) {
   const [editErrors, setEditErrors] = useState<ErrorsObj>({})
     const [currentRow, setCurrentRow] = useState<TableRow|null>(null)
     const handleEditOpen = (row:any) => {
-    setCurrentRow(row)
+
+    let newRow = {...row}
+    for (const locale in row.tr) {
+        for (const field in row.tr[locale]){
+            let newFieldName = `${locale}_${field}`
+            let value = row.tr[locale][field]
+            newRow[newFieldName]=value
+        }
+    }
+
+    delete newRow.tr
+    setCurrentRow(newRow)
     setEditOpen(true)
   }
 

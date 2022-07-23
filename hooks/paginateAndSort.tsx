@@ -3,7 +3,7 @@ import { fetchMany } from "@/support/query"
 import React, { useState, useEffect,useCallback } from "react"
 interface ItemsType {
   data: []
-    metaData: { rowsNumber: number , can_create:boolean, can_update:boolean, can_delete:boolean}
+    metaData: {locales:Array<string>, locale:string, rowsNumber: number , can_create:boolean, can_update:boolean, can_delete:boolean}
 }
 export default function usePaginateAndSort(url: string) {
   const [page, setPage] = useState(0)

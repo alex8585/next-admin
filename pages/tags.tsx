@@ -19,6 +19,7 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import useActionsHead from "@/hooks/actionsHead"
 import ActionsCell from "@/components/ActionsCell"
+import {getTranslation} from "@/support/helpers"
 
 const Tags: NextPage | null = () => {
   let headCells: HeadCells = [
@@ -80,8 +81,10 @@ const Tags: NextPage | null = () => {
   let canUpdate = items?.metaData.can_update ?? false
 
   headCells = useActionsHead(items, headCells)
+  if (!items || !items.metaData) return null
 
-  if (!items) return null
+  let currentLoc = items.metaData?.locale
+
 
   return (
     <AdminLayout title="Tags">
@@ -107,7 +110,7 @@ const Tags: NextPage | null = () => {
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="left">{getTranslation(row,currentLoc,'name')}</TableCell>
                 <ActionsCell
                   canDelete={canDelete}
                   canUpdate={canUpdate}
@@ -130,12 +133,14 @@ const Tags: NextPage | null = () => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <CreateForm
+        meta={items?.metaData}
         open={createOpen}
         errors={createErrors}
         handleClose={handleCreateClose}
         handleSubmit={handleCreateSubmit}
       />
       <EditForm
+        meta={items?.metaData}
         currentRow={currentRow}
         open={editOpen}
         errors={editErrors}
