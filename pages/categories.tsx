@@ -20,8 +20,7 @@ import CreateForm from "@/components/categories/CreateForm"
 import EditForm from "@/components/categories/EditForm"
 import DeleteForm from "@/components/categories/DeleteForm"
 import ActionsCell from "@/components/ActionsCell"
-
-
+import { getTranslation } from "@/support/helpers"
 const Categories: NextPage | null = () => {
   let headCells: HeadCells = [
     {
@@ -86,8 +85,9 @@ const Categories: NextPage | null = () => {
   let canDelete = items?.metaData.can_delete ?? false
   let canUpdate = items?.metaData.can_update ?? false
 
-
   if (!items) return null
+  let currentLoc = items.metaData?.locale
+
   return (
     <AdminLayout title="Categories">
       {canCreate && (
@@ -115,7 +115,7 @@ const Categories: NextPage | null = () => {
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="left">{getTranslation(row, currentLoc, "name")} </TableCell>
                 <ActionsCell
                   canDelete={canDelete}
                   canUpdate={canUpdate}
@@ -138,12 +138,14 @@ const Categories: NextPage | null = () => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <CreateForm
+        meta={items?.metaData}
         open={createOpen}
         errors={createErrors}
         handleClose={handleCreateClose}
         handleSubmit={handleCreateSubmit}
       />
       <EditForm
+        meta={items?.metaData}
         currentRow={currentRow}
         open={editOpen}
         errors={editErrors}
