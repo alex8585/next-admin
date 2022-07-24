@@ -26,7 +26,7 @@ export default function useCreate(url: string,doQuery:() => Promise<void>) {
       })
       .catch(function (error) {
         if (error.response.status == 403) {
-          setCreateErrors({ global: "Unauthorized action." })
+          setCreateErrors({ global: ["Unauthorized action."] })
         }
         if (error.response.data.errors) {
           setCreateErrors(error.response.data.errors)

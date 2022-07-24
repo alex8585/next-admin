@@ -29,7 +29,7 @@ export default function useDelete(url: string, doQuery: () => Promise<void>) {
       })
       .catch(function (error) {
         if (error.response.status == 403) {
-          setDeleteErrors({ global: "Unauthorized action." })
+          setDeleteErrors({ global: ["Unauthorized action."] })
         }
         if (error.response.data.errors) {
           setDeleteErrors(error.response.data.errors)

@@ -1,3 +1,18 @@
+export function getLocales() {
+    return ['en','uk','ru'] 
+}
+
+export function  getLocalesFields(fields:Array<string>) {
+    let locales = getLocales()
+    let obj:StringsObj = {} 
+    for (const field of fields) {
+        for(const locale of locales) {
+            let keyName = `${locale}_${field}`
+            obj[keyName] = ''
+        }
+    }
+   return obj
+}
 export function getTranslation(row: any, currentLoc: string, name: string) {
   if (typeof row["tr"][currentLoc] !== "undefined")
     return row["tr"][currentLoc][name]

@@ -42,7 +42,7 @@ export default function useEdit(url: string,doQuery:() => Promise<void>) {
       })
       .catch(function (error) {
         if (error.response.status == 403) {
-          setEditErrors({ global: "Unauthorized action." })
+          setEditErrors({ global: ["Unauthorized action."] })
         }
         if (error.response.data.errors) {
           setEditErrors(error.response.data.errors)

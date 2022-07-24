@@ -21,7 +21,6 @@ import EditForm from "@/components/categories/EditForm"
 import DeleteForm from "@/components/categories/DeleteForm"
 import ActionsCell from "@/components/ActionsCell"
 
-import useActionsHead from "@/hooks/actionsHead"
 
 const Categories: NextPage | null = () => {
   let headCells: HeadCells = [
@@ -35,6 +34,11 @@ const Categories: NextPage | null = () => {
     },
   ]
 
+  headCells.push({
+    id: "actions",
+    label: "Actions",
+    sort: false,
+  })
   const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/categories"
   const {
     items,
@@ -82,7 +86,6 @@ const Categories: NextPage | null = () => {
   let canDelete = items?.metaData.can_delete ?? false
   let canUpdate = items?.metaData.can_update ?? false
 
-  headCells = useActionsHead(items, headCells)
 
   if (!items) return null
   return (
@@ -96,6 +99,8 @@ const Categories: NextPage | null = () => {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
+            canDelete={canDelete}
+            canUpdate={canUpdate}
             headCells={headCells}
             order={order}
             orderBy={orderBy}

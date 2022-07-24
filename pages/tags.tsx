@@ -17,9 +17,8 @@ import DeleteForm from "@/components/tags/DeleteForm"
 import useCreate from "@/hooks/create"
 import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
-import useActionsHead from "@/hooks/actionsHead"
 import ActionsCell from "@/components/ActionsCell"
-import {getTranslation} from "@/support/helpers"
+import { getTranslation } from "@/support/helpers"
 
 const Tags: NextPage | null = () => {
   let headCells: HeadCells = [
@@ -33,6 +32,11 @@ const Tags: NextPage | null = () => {
     },
   ]
 
+  headCells.push({
+    id: "actions",
+    label: "Actions",
+    sort: false,
+  })
   const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/tags"
   const {
     items,
@@ -80,11 +84,9 @@ const Tags: NextPage | null = () => {
   let canDelete = items?.metaData.can_delete ?? false
   let canUpdate = items?.metaData.can_update ?? false
 
-  headCells = useActionsHead(items, headCells)
   if (!items || !items.metaData) return null
 
   let currentLoc = items.metaData?.locale
-
 
   return (
     <AdminLayout title="Tags">
@@ -96,6 +98,8 @@ const Tags: NextPage | null = () => {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
+            canDelete={canDelete}
+            canUpdate={canUpdate}
             headCells={headCells}
             order={order}
             orderBy={orderBy}
@@ -110,7 +114,9 @@ const Tags: NextPage | null = () => {
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="left">{getTranslation(row,currentLoc,'name')}</TableCell>
+                <TableCell align="left">
+                  {getTranslation(row, currentLoc, "name")}
+                </TableCell>
                 <ActionsCell
                   canDelete={canDelete}
                   canUpdate={canUpdate}

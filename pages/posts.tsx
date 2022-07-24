@@ -25,7 +25,6 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import { fetchAll } from "@/support/query"
 
-import useActionsHead from "@/hooks/actionsHead"
 import ActionsCell from "@/components/ActionsCell"
 
 const Posts: NextPage | null = () => {
@@ -45,6 +44,11 @@ const Posts: NextPage | null = () => {
     },
   ]
 
+  headCells.push({
+    id: "actions",
+    label: "Actions",
+    sort: false,
+  })
   const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/posts"
   const {
     items,
@@ -108,7 +112,6 @@ const Posts: NextPage | null = () => {
   let canDelete = items?.metaData.can_delete ?? false
   let canUpdate = items?.metaData.can_update ?? false
 
-  headCells = useActionsHead(items, headCells)
 
   if (!items) return null
   return (
@@ -122,6 +125,8 @@ const Posts: NextPage | null = () => {
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
+            canDelete={canDelete}
+            canUpdate={canUpdate}
             headCells={headCells}
             order={order}
             orderBy={orderBy}

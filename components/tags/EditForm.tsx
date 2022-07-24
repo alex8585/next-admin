@@ -13,15 +13,16 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import { MouseEvent } from "react"
 import useChangeForm from "@/hooks/formChange"
+import {getLocalesFields} from "@/support/helpers"
 
+import ErrorsMessages from "@/components/ErrorsMessages"
 type EditFromProps = {
   open: boolean
   errors: ErrorsObj
   handleClose: React.MouseEventHandler<HTMLButtonElement>
   handleSubmit: (values: { name: string }) => any
   currentRow: any
-  meta: {locale:string, locales: Array<string> }
-
+  meta: { locale: string; locales: Array<string> }
 }
 
 const CreateForm = ({
@@ -32,14 +33,19 @@ const CreateForm = ({
   handleSubmit,
   currentRow,
 }: EditFromProps) => {
-  const initState = useMemo(() => ({ en_name: "",uk_name:"",ru_name:"" }), [])
+  const initState = useMemo(
+      () => {
+          let fields= getLocalesFields(['name'])
+          return fields;
+      },
+    []
+  )
   const { handleChange, values, setValues } = useChangeForm(initState)
 
   const [selectedLang, setLang] = useState(meta.locale)
 
   const handleChangeLang = (event: MouseEvent<HTMLElement>, lang: string) => {
-    if(!lang)
-          return
+    if (!lang) return
     setLang(lang)
   }
 
@@ -51,17 +57,15 @@ const CreateForm = ({
 
   useEffect(() => {
     if (!open) {
-         setLang(meta.locale)
+      setLang(meta.locale)
     }
-  }, [setLang,open,meta.locale])
+  }, [setLang, open, meta.locale])
 
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit tag</DialogTitle>
-        <div>
-          {errors?.global && <Alert severity="error">{errors.global}</Alert>}
-        </div>
+        <ErrorsMessages errors={errors} />
         <DialogContent sx={{ textAlign: "center", minWidth: 500 }}>
           <ToggleButtonGroup
             sx={{ mb: 2 }}
@@ -78,24 +82,33 @@ const CreateForm = ({
             ))}
           </ToggleButtonGroup>
 
-          {meta.locales.map((lang:string) =>{
-              let display = lang == selectedLang ? 'inline-flex':'none'
-              return(
-          <OutlinedInput key={lang}
-            sx={{ width: "100%", display: display}}
-            error={errors?.name ? true : false}
-            name={lang + '_name'}
-            value={values[lang + '_name'] ?? ''}
-            onChange={handleChange}
-            id={lang + '_name'}
-            label="Name"
-            helperText={errors.name && errors.name[0]}
-          /> )})}
-
+          {meta.locales.map((lang: string) => {
+            let display = lang == selectedLang ? "inline-flex" : "none"
+            let nameField = `${lang}_name`
+            return (
+              <OutlinedInput
+                key={lang}
+                sx={{ width: "100%", display: display }}
+                error={errors[nameField] ? true : false}
+                name={nameField}
+                value={values[nameField] ?? ""}
+                onChange={handleChange}
+                id={nameField}
+                label="Name"
+                helperText={errors[nameField] && errors[nameField][0]}
+              />
+            )
+          })}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={ () => { handleSubmit(values)  }}>Save</Button>
+          <Button
+            onClick={() => {
+              handleSubmit(values)
+            }}
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
