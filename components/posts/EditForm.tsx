@@ -13,6 +13,11 @@ import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import useChangeForm from "@/hooks/formChange"
+import ToggleButton from "@mui/material/ToggleButton"
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
+import { MouseEvent } from "react"
+import { getLocalesFields } from "@/support/helpers"
+import ErrorsMessages from "@/components/ErrorsMessages"
 type EditFromProps = {
   tags: Array<any>
   cats: Array<any>
@@ -21,9 +26,11 @@ type EditFromProps = {
   handleClose: React.MouseEventHandler<HTMLButtonElement>
   handleSubmit: (values: { title: string; description: string }) => any
   currentRow: any
+  meta: { locale: string; locales: Array<string> }
 }
 
 const CreateForm = ({
+  meta,
   cats,
   tags,
   open,
@@ -33,20 +40,25 @@ const CreateForm = ({
   currentRow,
 }: EditFromProps) => {
   const initState = useMemo<{
-    title: string
-    description: string
     category: { value: string }
     tags: Array<any>
-  }>(
-    () => ({
-      title: "",
-      description: "",
+  }>(() => {
+    let fields = getLocalesFields(["title", "description"])
+    return {
+      ...fields,
       category: { value: "" },
       tags: [],
-    }),
-    []
-  )
+    }
+  }, [])
+
   const { handleChange, values, setValues } = useChangeForm(initState)
+
+  const [selectedLang, setLang] = useState(meta.locale)
+
+  const handleChangeLang = (event: MouseEvent<HTMLElement>, lang: string) => {
+    if (!lang) return
+    setLang(lang)
+  }
 
   function handleChangeCat(e: any) {
     const value = e.target.value
@@ -76,41 +88,68 @@ const CreateForm = ({
     }
   }, [currentRow, setValues])
 
+  useEffect(() => {
+    if (!open) {
+      setLang(meta.locale)
+    }
+  }, [setLang, open, meta.locale])
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit post</DialogTitle>
-        <div>
-          {errors?.global && <Alert severity="error">{errors.global}</Alert>}
-        </div>
-        <DialogContent sx={{ minWidth: 500 }}>
-          <div>
-            <OutlinedInput
-              sx={{ mb: 1, minWidth: "100%" }}
-              error={errors?.title ? true : false}
-              name="title"
-              value={values.title}
-              onChange={handleChange}
-              id="title"
-              label="Title"
-              helperText={errors.title && errors.title[0]}
-            />
-          </div>
-          <div>
-            <OutlinedInput
-              sx={{ mb: 1, minWidth: "100%" }}
-              error={errors?.description ? true : false}
-              name="description"
-              value={values.description}
-              onChange={handleChange}
-              id="description"
-              label="Description"
-              helperText={errors.description && errors.description[0]}
-            />
-          </div>
+        <ErrorsMessages errors={errors} />
+        <DialogContent sx={{ textAlign: "center", minWidth: 500 }}>
+          <ToggleButtonGroup
+            sx={{ mb: 2 }}
+            color="primary"
+            value={selectedLang}
+            exclusive
+            onChange={handleChangeLang}
+          >
+            {meta.locales.map((lang: string) => (
+              <ToggleButton key={lang} value={lang}>
+                {" "}
+                {lang}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+          {meta.locales.map((lang: string) => {
+            let display = lang == selectedLang ? "inline-flex" : "none"
+            let titleField = `${lang}_title`
+            let descriotionField = `${lang}_description`
+            return (
+              <div key={lang}>
+                <div>
+                  <OutlinedInput
+                    sx={{ mb:1,width: "100%", display: display }}
+                    error={errors[titleField] != undefined ? true : false}
+                    name={titleField}
+                    value={values[titleField]}
+                    onChange={handleChange}
+                    id={titleField}
+                    label="Title"
+                    helperText={errors[titleField] && errors[titleField][0]}
+                  />
+                </div>
+                <div>
+                  <OutlinedInput
+                    sx={{ mb:1,width: "100%", display: display }}
+                    error={errors[descriotionField] != undefined ? true : false}
+                    name={descriotionField}
+                    value={values[descriotionField]}
+                    onChange={handleChange}
+                    id={descriotionField}
+                    label="Description"
+                    helperText={errors[descriotionField] && errors[descriotionField][0]}
+                  />
+                </div>
+              </div>
+            )
+          })}
 
           <div className="form-row">
-              <FormControl sx={{mt:1, width: 180 }}>
+            <FormControl sx={{ mt: 1, width: 180 }}>
               <InputLabel id="select-label-cat">Category</InputLabel>
               <Select
                 sx={{ minWidth: 30 }}

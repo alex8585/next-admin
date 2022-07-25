@@ -25,6 +25,7 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import { fetchAll } from "@/support/query"
 
+import { getTranslation } from "@/support/helpers"
 import ActionsCell from "@/components/ActionsCell"
 
 const Posts: NextPage | null = () => {
@@ -112,8 +113,9 @@ const Posts: NextPage | null = () => {
   let canDelete = items?.metaData.can_delete ?? false
   let canUpdate = items?.metaData.can_update ?? false
 
-
   if (!items) return null
+  let currentLoc = items.metaData?.locale
+
   return (
     <AdminLayout title="Posts">
       {canCreate && (
@@ -139,8 +141,12 @@ const Posts: NextPage | null = () => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell>{row.id}</TableCell>
-                <TableCell>{row.title}</TableCell>
-                <TableCell>{row.description}</TableCell>
+                <TableCell align="left">
+                  {getTranslation(row, currentLoc, "title")}{" "}
+                </TableCell>
+                <TableCell align="left">
+                  {getTranslation(row, currentLoc, "description")}{" "}
+                </TableCell>
                 <ActionsCell
                   canDelete={canDelete}
                   canUpdate={canUpdate}
@@ -163,6 +169,7 @@ const Posts: NextPage | null = () => {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
       <CreateForm
+        meta={items?.metaData}
         tags={tags}
         cats={cats}
         open={createOpen}
@@ -171,6 +178,7 @@ const Posts: NextPage | null = () => {
         handleSubmit={handleCreateSubmit}
       />
       <EditForm
+        meta={items?.metaData}
         tags={tags}
         cats={cats}
         currentRow={currentRow}
