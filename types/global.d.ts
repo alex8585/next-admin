@@ -1,5 +1,4 @@
 export {}
-
 declare global {
   interface ErrorsObj {
     [key: string]: Array<string>

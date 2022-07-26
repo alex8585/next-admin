@@ -43,7 +43,6 @@ export default function AccountMenu() {
           "aria-labelledby": "basic-button",
         }}
       >
-
         <Link href="/logout">
           <ListItem
             button

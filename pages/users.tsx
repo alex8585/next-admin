@@ -24,8 +24,9 @@ import useCreate from "@/hooks/create"
 import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 
+import { getApiUrl } from "@/support/helpers"
 import ActionsCell from "@/components/ActionsCell"
-
+import FilterForm from "@/components/users/FilterForm"
 const Users: NextPage | null = () => {
   let headCells: HeadCells = [
     {
@@ -47,13 +48,14 @@ const Users: NextPage | null = () => {
     label: "Actions",
     sort: false,
   })
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/users"
+  const url = getApiUrl("users")
   const {
     items,
     page,
     order,
     orderBy,
     handleRequestSort,
+    handleChangeFilter,
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
@@ -93,7 +95,6 @@ const Users: NextPage | null = () => {
   let canDelete = items?.metaData.can_delete ?? false
   let canUpdate = items?.metaData.can_update ?? false
 
-
   if (!items) return null
   return (
     <AdminLayout title="Users">
@@ -102,7 +103,7 @@ const Users: NextPage | null = () => {
           Create
         </Button>
       )}
-
+      <FilterForm handleChangeFilter={handleChangeFilter} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead

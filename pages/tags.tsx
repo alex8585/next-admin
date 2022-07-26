@@ -18,8 +18,8 @@ import useCreate from "@/hooks/create"
 import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import ActionsCell from "@/components/ActionsCell"
-import { getTranslation } from "@/support/helpers"
 import FilterForm from "@/components/tags/FilterForm"
+import { getTranslation, getApiUrl } from "@/support/helpers"
 const Tags: NextPage | null = () => {
   let headCells: HeadCells = [
     {
@@ -37,7 +37,7 @@ const Tags: NextPage | null = () => {
     label: "Actions",
     sort: false,
   })
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/tags"
+  const url = getApiUrl("tags")
   const {
     items,
     page,
@@ -96,7 +96,7 @@ const Tags: NextPage | null = () => {
           Create
         </Button>
       )}
-    <FilterForm handleChangeFilter={handleChangeFilter} />
+      <FilterForm handleChangeFilter={handleChangeFilter} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead

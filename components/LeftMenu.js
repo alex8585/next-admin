@@ -5,10 +5,12 @@ import ListItemText from "@mui/material/ListItemText"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import PeopleIcon from "@mui/icons-material/People"
+import TagIcon from '@mui/icons-material/Tag';
 import List from "@mui/material/List"
 import Link from "next/link"
 import { useRouter } from "next/router"
-
+import CategoryIcon from '@mui/icons-material/Category';
+import ArticleIcon from '@mui/icons-material/Article';
 const LeftMenu = () => {
   const router = useRouter()
   return (
@@ -21,7 +23,7 @@ const LeftMenu = () => {
             disabled={router.asPath == "/dashboard"}
           >
             <ListItemIcon>
-              <PeopleIcon />
+              <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
@@ -34,7 +36,7 @@ const LeftMenu = () => {
             disabled={router.asPath == "/tags"}
           >
             <ListItemIcon>
-              <PeopleIcon />
+              <TagIcon />
             </ListItemIcon>
             <ListItemText primary="Tags" />
           </ListItem>
@@ -46,7 +48,7 @@ const LeftMenu = () => {
             disabled={router.asPath == "/categories"}
           >
             <ListItemIcon>
-              <PeopleIcon />
+              <CategoryIcon />
             </ListItemIcon>
             <ListItemText primary="Categories" />
           </ListItem>
@@ -59,7 +61,7 @@ const LeftMenu = () => {
             disabled={router.asPath == "/posts"}
           >
             <ListItemIcon>
-              <PeopleIcon />
+              <ArticleIcon />
             </ListItemIcon>
             <ListItemText primary="Posts" />
           </ListItem>

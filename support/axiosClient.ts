@@ -1,18 +1,20 @@
 import axios from "axios"
 import queryString from "query-string"
-import cookie from "cookie"
+import Cookies from "js-cookie"
 const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
   paramsSerializer: (params) => queryString.stringify(params),
 })
 
+
 axiosClient.interceptors.request.use(
   function (config) {
     if (typeof window !== "undefined") {
-      let token: string | null = cookie.parse(document.cookie).token
+      let token =  Cookies.get('token') ?? null
       if (!token) {
         token = localStorage.getItem("token")
       }
@@ -20,7 +22,6 @@ axiosClient.interceptors.request.use(
       if (!config.headers) {
         config.headers = {}
       }
-
       config.headers.Authorization = auth
     }
     return config
@@ -36,7 +37,6 @@ axiosClient.interceptors.response.use(
   },
   function (error) {
     if (error.response.status == 401) {
-      console.log(error.response.config.url)
       if (window.location.pathname !== "/login") {
         window.location.href = "/login"
       }

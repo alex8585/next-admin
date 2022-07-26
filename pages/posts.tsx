@@ -25,7 +25,7 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import { fetchAll } from "@/support/query"
 
-import { getTranslation } from "@/support/helpers"
+import { getTranslation,getApiUrl } from "@/support/helpers"
 import ActionsCell from "@/components/ActionsCell"
 import FilterForm from "@/components/posts/FilterForm"
 const Posts: NextPage | null = () => {
@@ -50,7 +50,9 @@ const Posts: NextPage | null = () => {
     label: "Actions",
     sort: false,
   })
-  const url = process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/posts"
+
+  const url = getApiUrl("posts") 
+
   const {
     items,
     page,

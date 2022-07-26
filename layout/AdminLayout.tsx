@@ -20,6 +20,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications"
 import useAuth from "@/hooks/auth"
 import LeftMenu from "@/components/LeftMenu"
 import AccountMenu from "@/components/AccountMenu"
+import LangSelect from "@/components/LangSelect"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 const drawerWidth: number = 240
@@ -141,6 +142,7 @@ function AdminLayout({ children, title }: Props): JSX.Element | null {
               {title}
             </Typography>
             <AccountMenu/>
+            <LangSelect />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
