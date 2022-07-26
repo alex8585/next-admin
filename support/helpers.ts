@@ -42,25 +42,15 @@ export function shorten(str: string, no_words: number, suff = " ...") {
   }
   return newStr
 }
-export function filterArrToFilterStr(filter: any) {
-  let filterStr = ""
-
-  if (filter) {
-    const filterObj = filter.value
-    if (filterObj) {
-      for (const prop in filterObj) {
-        let val = filterObj[prop]
-        if (val.value || val.label) {
-          val = val.value
-        } else if (typeof val === "object") {
-          const vals = [...val].map((e) => {
-            return e.value
-          })
-          val = vals.join(",")
-        }
-        filterStr += `&filter[${prop}]=${val}`
-      }
+export function filterObjToStr(filter: any) {
+  let filterStr = '';
+  for (let field in filter) {
+    let value = filter[field]
+    if(value) {
+        filterStr += `filter[${field}]=${value}&`
     }
   }
-  return filterStr
+  if(filterStr) 
+        return `&${filterStr}`
+  return ''
 }

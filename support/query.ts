@@ -1,4 +1,4 @@
-import { filterArrToFilterStr } from "@/support/helpers";
+import { filterObjToStr } from "@/support/helpers";
 import axiosClient from "@/support/axiosClient";
 export async function fetchMany(
   url: string,
@@ -8,8 +8,8 @@ export async function fetchMany(
   descending = true,
   filter: any
 ) {
-  const filterStr = filterArrToFilterStr(filter);
-  let tagsUrl = `${url}/?page=${page}&perPage=${perPage}&orderBy=${orderBy}&descending=${descending}`;
+  const filterStr = filterObjToStr(filter);
+  let tagsUrl = `${url}/?page=${page}&perPage=${perPage}&orderBy=${orderBy}&descending=${descending}${filterStr}`;
 
   if (filterStr) {
     tagsUrl = `${tagsUrl}${filterStr}`;

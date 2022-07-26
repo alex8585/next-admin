@@ -11,10 +11,10 @@ export default function usePaginateAndSort(url: string) {
   const [items, setItems] = useState<ItemsType | null>(null)
   const [order, setOrder] = useState<Order>("asc")
   const [orderBy, setOrderBy] = useState("id")
+  const [filter, setFilter] = useState({})
 
     
   const doQuery = useCallback(async () => {
-    let filter = {}
     let descending = order == "asc" ? true : false
     let res = await fetchMany(
       url,
@@ -25,7 +25,7 @@ export default function usePaginateAndSort(url: string) {
       filter
     )
     setItems(res.data)
-  },[url, page, rowsPerPage, orderBy, order])
+  },[url, page, rowsPerPage, orderBy, order,filter])
 
   useEffect(() => {
     doQuery()
@@ -34,6 +34,11 @@ export default function usePaginateAndSort(url: string) {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
   }
+
+  const handleChangeFilter = (filter: any) => {
+    setFilter(filter)
+  }
+
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -52,6 +57,7 @@ export default function usePaginateAndSort(url: string) {
   }
 
   return {
+    handleChangeFilter,
     items,
     page,
     order,

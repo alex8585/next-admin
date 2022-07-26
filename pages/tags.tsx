@@ -19,7 +19,7 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import ActionsCell from "@/components/ActionsCell"
 import { getTranslation } from "@/support/helpers"
-
+import FilterForm from "@/components/tags/FilterForm"
 const Tags: NextPage | null = () => {
   let headCells: HeadCells = [
     {
@@ -44,6 +44,7 @@ const Tags: NextPage | null = () => {
     order,
     orderBy,
     handleRequestSort,
+    handleChangeFilter,
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
@@ -95,6 +96,7 @@ const Tags: NextPage | null = () => {
           Create
         </Button>
       )}
+    <FilterForm handleChangeFilter={handleChangeFilter} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead

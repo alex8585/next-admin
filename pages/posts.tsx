@@ -27,7 +27,7 @@ import { fetchAll } from "@/support/query"
 
 import { getTranslation } from "@/support/helpers"
 import ActionsCell from "@/components/ActionsCell"
-
+import FilterForm from "@/components/posts/FilterForm"
 const Posts: NextPage | null = () => {
   let headCells: HeadCells = [
     {
@@ -56,6 +56,7 @@ const Posts: NextPage | null = () => {
     page,
     order,
     orderBy,
+    handleChangeFilter,
     handleRequestSort,
     rowsPerPage,
     handleChangePage,
@@ -125,6 +126,7 @@ const Posts: NextPage | null = () => {
       )}
 
       <TableContainer component={Paper}>
+        <FilterForm handleChangeFilter={handleChangeFilter} />
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
             canDelete={canDelete}

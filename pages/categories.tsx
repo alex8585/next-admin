@@ -17,6 +17,7 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 
 import CreateForm from "@/components/categories/CreateForm"
+import FilterForm from "@/components/categories/FilterForm"
 import EditForm from "@/components/categories/EditForm"
 import DeleteForm from "@/components/categories/DeleteForm"
 import ActionsCell from "@/components/ActionsCell"
@@ -45,6 +46,7 @@ const Categories: NextPage | null = () => {
     order,
     orderBy,
     handleRequestSort,
+    handleChangeFilter,
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
@@ -96,6 +98,7 @@ const Categories: NextPage | null = () => {
         </Button>
       )}
 
+      <FilterForm handleChangeFilter={handleChangeFilter} />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <EnhancedTableHead
@@ -115,7 +118,9 @@ const Categories: NextPage | null = () => {
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="left">{getTranslation(row, currentLoc, "name")} </TableCell>
+                <TableCell align="left">
+                  {getTranslation(row, currentLoc, "name")}{" "}
+                </TableCell>
                 <ActionsCell
                   canDelete={canDelete}
                   canUpdate={canUpdate}
