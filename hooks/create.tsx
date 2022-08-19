@@ -1,8 +1,6 @@
-
 import axiosClient from "@/support/axiosClient"
-import  { useRef, useState, useEffect } from "react"
-export default function useCreate(url: string,doQuery:() => Promise<void>) {
-
+import { useRef, useState, useEffect } from "react"
+export default function useCreate(url: string, doQuery: () => Promise<void>) {
   const [createOpen, setCreateOpen] = useState(false)
   const [createErrors, setCreateErrors] = useState<ErrorsObj>({})
 
@@ -34,5 +32,13 @@ export default function useCreate(url: string,doQuery:() => Promise<void>) {
       })
   }
 
-    return {createOpen, setCreateOpen,createErrors,setCreateErrors,handleCreateOpen,handleCreateClose,handleCreateSubmit}
+  return {
+    createOpen,
+    setCreateOpen,
+    createErrors,
+    setCreateErrors,
+    handleCreateOpen,
+    handleCreateClose,
+    handleCreateSubmit,
+  }
 }

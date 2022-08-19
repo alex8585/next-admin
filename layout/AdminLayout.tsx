@@ -100,13 +100,13 @@ function AdminLayout({ children, title }: Props): JSX.Element | null {
       const u = await getUser()
       // console.log(u)
       if (u) {
-          setLoading(false)
+        setLoading(false)
         await setUser(u)
       } else {
-         router.push("/login")
+        router.push("/login")
       }
     })()
-  }, [router])// eslint-disable-line react-hooks/exhaustive-deps
+  }, [router]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user || loading) {
     return null
@@ -141,7 +141,7 @@ function AdminLayout({ children, title }: Props): JSX.Element | null {
             >
               {title}
             </Typography>
-            <AccountMenu/>
+            <AccountMenu />
             <LangSelect />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">

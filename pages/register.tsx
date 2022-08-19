@@ -112,9 +112,11 @@ const Register: NextPage | null = () => {
             noValidate
             sx={{ mt: 1 }}
           >
-              <div>
-          {errors?.global && <Alert severity="error">{errors.global}</Alert>}
-        </div>
+            <div>
+              {errors?.global && (
+                <Alert severity="error">{errors.global}</Alert>
+              )}
+            </div>
 
             <TextField
               error={errors?.email ? true : false}

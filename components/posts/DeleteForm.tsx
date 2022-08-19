@@ -23,7 +23,6 @@ const DeleteForm = ({
   handleSubmit,
   deletingRow,
 }: DeleteFormProps) => {
-
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>

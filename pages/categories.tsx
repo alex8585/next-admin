@@ -21,7 +21,7 @@ import FilterForm from "@/components/categories/FilterForm"
 import EditForm from "@/components/categories/EditForm"
 import DeleteForm from "@/components/categories/DeleteForm"
 import ActionsCell from "@/components/ActionsCell"
-import { getTranslation,getApiUrl } from "@/support/helpers"
+import { getTranslation, getApiUrl } from "@/support/helpers"
 
 const Categories: NextPage | null = () => {
   let headCells: HeadCells = [
@@ -40,7 +40,7 @@ const Categories: NextPage | null = () => {
     label: "Actions",
     sort: false,
   })
-  const url = getApiUrl("categories") 
+  const url = getApiUrl("categories")
   const {
     items,
     page,

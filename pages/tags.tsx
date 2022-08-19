@@ -20,6 +20,7 @@ import useDelete from "@/hooks/delete"
 import ActionsCell from "@/components/ActionsCell"
 import FilterForm from "@/components/tags/FilterForm"
 import { getTranslation, getApiUrl } from "@/support/helpers"
+
 const Tags: NextPage | null = () => {
   let headCells: HeadCells = [
     {

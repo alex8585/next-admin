@@ -13,7 +13,7 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import { MouseEvent } from "react"
 import useChangeForm from "@/hooks/formChange"
-import {getLocalesFields} from "@/support/helpers"
+import { getLocalesFields } from "@/support/helpers"
 
 import ErrorsMessages from "@/components/ErrorsMessages"
 type EditFromProps = {
@@ -33,13 +33,10 @@ const CreateForm = ({
   handleSubmit,
   currentRow,
 }: EditFromProps) => {
-  const initState = useMemo(
-      () => {
-          let fields= getLocalesFields(['name'])
-          return fields;
-      },
-    []
-  )
+  const initState = useMemo(() => {
+    let fields = getLocalesFields(["name"])
+    return fields
+  }, [])
   const { handleChange, values, setValues } = useChangeForm(initState)
 
   const [selectedLang, setLang] = useState(meta.locale)

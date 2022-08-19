@@ -14,7 +14,6 @@ import NotificationsIcon from "@mui/icons-material/Notifications"
 import LeftMenu from "@/components/LeftMenu"
 import AccountMenu from "@/components/AccountMenu"
 
-
 function AdminMenu({ title = "Dashboard" }) {
   const [open, setOpen] = useState(true)
   const toggleDrawer = () => {
@@ -50,7 +49,7 @@ function AdminMenu({ title = "Dashboard" }) {
           >
             {title}
           </Typography>
-                    {/* <a target="_blank" className={classes.url}>
+          {/* <a target="_blank" className={classes.url}>
             Frontend
           </a> */}
           <AccountMenu />
@@ -66,12 +65,15 @@ function AdminMenu({ title = "Dashboard" }) {
             px: [1],
           }}
         >
-           <div className={'classes.imgwrap'}>  <a href="/admin">Crypto stat </a></div> 
+          <div className={"classes.imgwrap"}>
+            {" "}
+            <a href="/admin">Crypto stat </a>
+          </div>
           <IconButton onClick={toggleDrawer}>
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
-            
+
         <LeftMenu />
       </div>
     </>

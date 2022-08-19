@@ -8,7 +8,7 @@ import useAuth from "@/hooks/auth"
 import { useRouter } from "next/router"
 
 import React, { useState, useEffect } from "react"
-const Logout: ()=>void = () => {
+const Logout: () => void = () => {
   const { logout } = useAuth()
   const router = useRouter()
   useEffect(() => {
@@ -16,7 +16,7 @@ const Logout: ()=>void = () => {
       await logout()
       router.push("/login")
     })()
-  }, [logout,router])
+  }, [logout, router])
 }
 
 export default Logout

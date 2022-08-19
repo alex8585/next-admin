@@ -65,20 +65,20 @@ const CreateForm = ({
         <ErrorsMessages errors={errors} />
 
         <DialogContent sx={{ textAlign: "center", minWidth: 500 }}>
-        <ToggleButtonGroup
-          sx={{ mb: 2 }}
-          color="primary"
-          value={selectedLang}
-          exclusive
-          onChange={handleChangeLang}
-        >
-          {meta.locales.map((lang: string) => (
-            <ToggleButton key={lang} value={lang}>
-              {" "}
-              {lang}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+          <ToggleButtonGroup
+            sx={{ mb: 2 }}
+            color="primary"
+            value={selectedLang}
+            exclusive
+            onChange={handleChangeLang}
+          >
+            {meta.locales.map((lang: string) => (
+              <ToggleButton key={lang} value={lang}>
+                {" "}
+                {lang}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
           {meta.locales.map((lang: string) => {
             let display = lang == selectedLang ? "inline-flex" : "none"
             let nameField = `${lang}_name`

@@ -12,7 +12,7 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import ErrorsMessages from "@/components/ErrorsMessages"
 import { MouseEvent } from "react"
-import {getLocalesFields} from "@/support/helpers"
+import { getLocalesFields } from "@/support/helpers"
 
 type CreateFromProps = {
   open: boolean
@@ -29,13 +29,10 @@ const CreateForm = ({
   handleClose,
   handleSubmit,
 }: CreateFromProps) => {
-
-  const initState = useMemo(
-      () => {
-          let fields= getLocalesFields(['name'])
-          return fields;
-      },[]
-  )
+  const initState = useMemo(() => {
+    let fields = getLocalesFields(["name"])
+    return fields
+  }, [])
 
   const [selectedLang, setLang] = useState(meta.locale)
 

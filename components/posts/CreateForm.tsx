@@ -122,7 +122,7 @@ const CreateForm = ({
               <div key={lang}>
                 <div>
                   <OutlinedInput
-                    sx={{ mb:1,width: "100%", display: display }}
+                    sx={{ mb: 1, width: "100%", display: display }}
                     error={errors[titleField] != undefined ? true : false}
                     name={titleField}
                     value={values[titleField]}
@@ -134,14 +134,16 @@ const CreateForm = ({
                 </div>
                 <div>
                   <OutlinedInput
-                    sx={{ mb:1,width: "100%", display: display }}
+                    sx={{ mb: 1, width: "100%", display: display }}
                     error={errors[descriotionField] != undefined ? true : false}
                     name={descriotionField}
                     value={values[descriotionField]}
                     onChange={handleChange}
                     id={descriotionField}
                     label="Description"
-                    helperText={errors[descriotionField] && errors[descriotionField][0]}
+                    helperText={
+                      errors[descriotionField] && errors[descriotionField][0]
+                    }
                   />
                 </div>
               </div>

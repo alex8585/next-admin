@@ -1,9 +1,16 @@
 import { HeadCells, Order } from "@/components/EnhancedTableHead"
 import { fetchMany } from "@/support/query"
-import React, { useState, useEffect,useCallback } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 interface ItemsType {
   data: []
-    metaData: {locales:Array<string>, locale:string, rowsNumber: number , can_create:boolean, can_update:boolean, can_delete:boolean}
+  metaData: {
+    locales: Array<string>
+    locale: string
+    rowsNumber: number
+    can_create: boolean
+    can_update: boolean
+    can_delete: boolean
+  }
 }
 export default function usePaginateAndSort(url: string) {
   const [page, setPage] = useState(0)
@@ -13,7 +20,6 @@ export default function usePaginateAndSort(url: string) {
   const [orderBy, setOrderBy] = useState("id")
   const [filter, setFilter] = useState({})
 
-    
   const doQuery = useCallback(async () => {
     let descending = order == "asc" ? true : false
     let res = await fetchMany(
@@ -25,11 +31,11 @@ export default function usePaginateAndSort(url: string) {
       filter
     )
     setItems(res.data)
-  },[url, page, rowsPerPage, orderBy, order,filter])
+  }, [url, page, rowsPerPage, orderBy, order, filter])
 
   useEffect(() => {
     doQuery()
-  }, [url, page, rowsPerPage, orderBy, order,doQuery])
+  }, [url, page, rowsPerPage, orderBy, order, doQuery])
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -38,7 +44,6 @@ export default function usePaginateAndSort(url: string) {
   const handleChangeFilter = (filter: any) => {
     setFilter(filter)
   }
-
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>

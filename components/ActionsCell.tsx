@@ -20,9 +20,13 @@ function ActionsCell(props: Props) {
 
   if (!canUpdate && !canDelete) return null
   return (
-    <TableCell >
+    <TableCell>
       {canUpdate && (
-        <Button variant="outlined" size="small" onClick={() => handleEditOpen(row)}>
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => handleEditOpen(row)}
+        >
           Edit
         </Button>
       )}

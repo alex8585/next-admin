@@ -25,7 +25,7 @@ import useEdit from "@/hooks/edit"
 import useDelete from "@/hooks/delete"
 import { fetchAll } from "@/support/query"
 
-import { getTranslation,getApiUrl } from "@/support/helpers"
+import { getTranslation, getApiUrl } from "@/support/helpers"
 import ActionsCell from "@/components/ActionsCell"
 import FilterForm from "@/components/posts/FilterForm"
 const Posts: NextPage | null = () => {
@@ -51,7 +51,7 @@ const Posts: NextPage | null = () => {
     sort: false,
   })
 
-  const url = getApiUrl("posts") 
+  const url = getApiUrl("posts")
 
   const {
     items,

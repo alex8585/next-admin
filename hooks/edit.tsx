@@ -1,23 +1,20 @@
-
 import axiosClient from "@/support/axiosClient"
-import  { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect } from "react"
 interface TableRow {
-    id:number
+  id: number
 }
-export default function useEdit(url: string,doQuery:() => Promise<void>) {
-
+export default function useEdit(url: string, doQuery: () => Promise<void>) {
   const [editOpen, setEditOpen] = useState(false)
   const [editErrors, setEditErrors] = useState<ErrorsObj>({})
-    const [currentRow, setCurrentRow] = useState<TableRow|null>(null)
-    const handleEditOpen = (row:any) => {
-
-    let newRow = {...row}
+  const [currentRow, setCurrentRow] = useState<TableRow | null>(null)
+  const handleEditOpen = (row: any) => {
+    let newRow = { ...row }
     for (const locale in row.tr) {
-        for (const field in row.tr[locale]){
-            let newFieldName = `${locale}_${field}`
-            let value = row.tr[locale][field]
-            newRow[newFieldName]=value
-        }
+      for (const field in row.tr[locale]) {
+        let newFieldName = `${locale}_${field}`
+        let value = row.tr[locale][field]
+        newRow[newFieldName] = value
+      }
     }
 
     delete newRow.tr
@@ -31,9 +28,9 @@ export default function useEdit(url: string,doQuery:() => Promise<void>) {
   }
 
   const handleEditSubmit = (values: any) => {
-    if(!currentRow) return
+    if (!currentRow) return
     axiosClient
-          .put(url+'/'+currentRow?.id, values)
+      .put(url + "/" + currentRow?.id, values)
       .then(function (res) {
         const msg = res.data.message
         console.log(msg)
@@ -50,5 +47,14 @@ export default function useEdit(url: string,doQuery:() => Promise<void>) {
       })
   }
 
-    return {currentRow, editOpen, setEditOpen,editErrors,setEditErrors,handleEditOpen,handleEditClose,handleEditSubmit}
+  return {
+    currentRow,
+    editOpen,
+    setEditOpen,
+    editErrors,
+    setEditErrors,
+    handleEditOpen,
+    handleEditClose,
+    handleEditSubmit,
+  }
 }

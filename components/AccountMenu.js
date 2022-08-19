@@ -17,13 +17,12 @@ export default function AccountMenu() {
     setAnchorEl(null)
   }
 
-
   // const {
   //   auth: { user },
   // } = usePage().props
 
   return (
-    <div >
+    <div>
       <Button
         id="basic-button"
         aria-controls="basic-menu"
@@ -32,7 +31,7 @@ export default function AccountMenu() {
         onClick={handleClick}
         variant="outlined"
       >
-        { "Menu"}
+        {"Menu"}
       </Button>
       <Menu
         id="basic-menu"
@@ -44,9 +43,7 @@ export default function AccountMenu() {
         }}
       >
         <Link href="/logout">
-          <ListItem
-            button
-          >
+          <ListItem button>
             <ListItemText primary="Logout" />
           </ListItem>
         </Link>

@@ -5,12 +5,12 @@ import ListItemText from "@mui/material/ListItemText"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import PeopleIcon from "@mui/icons-material/People"
-import TagIcon from '@mui/icons-material/Tag';
+import TagIcon from "@mui/icons-material/Tag"
 import List from "@mui/material/List"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import CategoryIcon from '@mui/icons-material/Category';
-import ArticleIcon from '@mui/icons-material/Article';
+import CategoryIcon from "@mui/icons-material/Category"
+import ArticleIcon from "@mui/icons-material/Article"
 const LeftMenu = () => {
   const router = useRouter()
   return (

@@ -30,7 +30,6 @@ const CreateForm = ({
   handleClose,
   handleSubmit,
 }: CreateFromProps) => {
-
   const initState = useMemo(() => {
     let fields = getLocalesFields(["name"])
     return fields
