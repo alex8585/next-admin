@@ -1,5 +1,5 @@
-import { filterObjToStr } from "@/support/helpers";
-import axiosClient from "@/support/axiosClient";
+import { filterObjToStr } from "@/support/helpers"
+import axiosClient from "@/support/axiosClient"
 export async function fetchMany(
   url: string,
   page = 1,
@@ -8,20 +8,20 @@ export async function fetchMany(
   descending = true,
   filter: any
 ) {
-  const filterStr = filterObjToStr(filter);
-  let tagsUrl = `${url}/?page=${page}&perPage=${perPage}&orderBy=${orderBy}&descending=${descending}${filterStr}`;
+  const filterStr = filterObjToStr(filter)
+  let tagsUrl = `${url}/?page=${page}&perPage=${perPage}&orderBy=${orderBy}&descending=${descending}${filterStr}`
 
   if (filterStr) {
-    tagsUrl = `${tagsUrl}${filterStr}`;
+    tagsUrl = `${tagsUrl}${filterStr}`
   }
-  return await axiosClient.get<any>(tagsUrl);
+  return await axiosClient.get<any>(tagsUrl)
 }
 
 export async function fetchAll(url: string) {
-  const allUrl = `${url}?perPage=-1`;
-  return await axiosClient.get<any>(allUrl);
+  const allUrl = `${url}?perPage=-1`
+  return await axiosClient.get<any>(allUrl)
 }
 
 export async function fetchUrl(url: string) {
-  return await axiosClient.get<any>(url);
+  return await axiosClient.get<any>(url)
 }

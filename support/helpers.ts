@@ -30,6 +30,7 @@ export function getLocalesFields(fields: Array<string>) {
   }
   return obj
 }
+
 export function getTranslation(row: any, currentLoc: string, name: string) {
   if (typeof row["tr"][currentLoc] !== "undefined")
     return row["tr"][currentLoc][name]

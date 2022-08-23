@@ -10,11 +10,10 @@ const axiosClient = axios.create({
   paramsSerializer: (params) => queryString.stringify(params),
 })
 
-
 axiosClient.interceptors.request.use(
   function (config) {
     if (typeof window !== "undefined") {
-      let token =  Cookies.get('token') ?? null
+      let token = Cookies.get("token") ?? null
       if (!token) {
         token = localStorage.getItem("token")
       }
