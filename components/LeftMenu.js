@@ -29,6 +29,19 @@ const LeftMenu = () => {
           </ListItem>
         </Link>
 
+        <Link href="/notifications">
+          <ListItem
+            button
+            className={router.asPath == "/notifications" ? "active" : ""}
+            disabled={router.asPath == "/notifications"}
+          >
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Notifications" />
+          </ListItem>
+        </Link>
+
         <Link href="/tags">
           <ListItem
             button
