@@ -36,10 +36,12 @@ const EditForm = ({
 }: EditFromProps) => {
   const initState = useMemo<{
     symbol: { value: string }
+    direction: { value: string }
   }>(() => {
     return {
       price: "",
       symbol: { value: "" },
+      direction: { value: "" },
     }
   }, [])
 
@@ -51,7 +53,14 @@ const EditForm = ({
         ? { value: currentRow.symbol_id }
         : { value: "" }
 
-      setValues({ id: currentRow.id, price: currentRow.price, symbol })
+      let direction = { value: currentRow.direction }
+
+      setValues({
+        id: currentRow.id,
+        price: currentRow.price,
+        symbol,
+        direction,
+      })
     }
   }, [currentRow, setValues])
 
@@ -63,6 +72,21 @@ const EditForm = ({
       symbol,
     }))
   }
+
+  function handleChangeDirection(e: any) {
+    const value = e.target.value
+    let direction = { value }
+    setValues((values: any) => ({
+      ...values,
+      direction,
+    }))
+  }
+
+  const directions = [
+    { id: 0, name: ">" },
+    { id: 1, name: "<" },
+  ]
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -73,7 +97,7 @@ const EditForm = ({
         </div>
         <DialogContent sx={{ width: 500 }}>
           <div className="form-row">
-            <FormControl sx={{ mt: 0, width: 180 }}>
+            <FormControl sx={{ mt: 0, width: 150 }}>
               <InputLabel id="select-label-symbol">Symbol</InputLabel>
               <Select
                 sx={{ minWidth: 30 }}
@@ -92,8 +116,27 @@ const EditForm = ({
               </Select>
             </FormControl>
 
+            <FormControl sx={{ mt: 0, width: 100 }}>
+              <InputLabel id="select-label-direction">Direction</InputLabel>
+              <Select
+                sx={{ minWidth: 30 }}
+                name="direction"
+                labelId="select-label-direction"
+                id="symbol-select"
+                value={values.direction.value}
+                label="Direction"
+                onChange={handleChangeDirection}
+              >
+                {directions.map((direction: { id: number; name: string }) => (
+                  <MenuItem key={direction.id} value={direction.id}>
+                    {direction.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <OutlinedInput
-              sx={{ mb: 1, width: 180 }}
+              sx={{ mb: 1, width: 150 }}
               error={errors?.price ? true : false}
               name="price"
               value={values.price}

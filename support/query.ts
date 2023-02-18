@@ -9,7 +9,7 @@ export async function fetchMany(
   filter: any
 ) {
   const filterStr = filterObjToStr(filter)
-  let tagsUrl = `${url}/?page=${page}&perPage=${perPage}&orderBy=${orderBy}&descending=${descending}${filterStr}`
+  let tagsUrl = `${url}/?page=${page}&perPage=${perPage}&orderBy=${orderBy}&descending=${descending}`
 
   if (filterStr) {
     tagsUrl = `${tagsUrl}${filterStr}`

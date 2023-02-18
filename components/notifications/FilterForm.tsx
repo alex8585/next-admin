@@ -5,13 +5,13 @@ import useChangeForm from "@/hooks/formChange"
 import { Stack, FormControl } from "@mui/material"
 import Paper from "@mui/material/Paper"
 
-type CreateFromProps = {
+type Props = {
   handleChangeFilter: any
 }
 
-const CreateForm = ({ handleChangeFilter }: CreateFromProps) => {
+const CreateForm = ({ handleChangeFilter }: Props) => {
   const initState = useMemo(() => {
-    return { name: "", email: "" }
+    return { symbol: "", price: "" }
   }, [])
 
   const { handleChange, values, setValues } = useChangeForm(initState)
@@ -25,20 +25,20 @@ const CreateForm = ({ handleChangeFilter }: CreateFromProps) => {
     <Paper sx={{ width: "500px", mt: 1, mb: 2, pt: 3, pb: 3 }}>
       <FormControl sx={{ width: "100%", mb: 2, pr: 3, pl: 3 }}>
         <OutlinedInput
-          name="name"
-          value={values["name"]}
+          name="symbol"
+          value={values["symbol"]}
           onChange={handleChange}
-          id="name"
-          label="Name"
+          id="symbol"
+          label="Symbol"
         />
       </FormControl>
       <FormControl sx={{ width: "100%", mb: 2, pr: 3, pl: 3 }}>
         <OutlinedInput
-          name="email"
-          value={values["email"]}
+          name="price"
+          value={values["price"]}
           onChange={handleChange}
-          id="email"
-          label="Email"
+          id="price"
+          label="Price"
         />
       </FormControl>
       <Stack

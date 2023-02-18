@@ -68,6 +68,6 @@ export function filterObjToStr(filter: any) {
       filterStr += `filter[${field}]=${value}&`
     }
   }
-  if (filterStr) return `&${filterStr}`
+  if (filterStr) return `&${filterStr}`.slice(0, -1)
   return ""
 }

@@ -39,6 +39,10 @@ const Users: NextPage | null = () => {
       label: "Symbol",
     },
     {
+      id: "direction",
+      label: "Direction",
+    },
+    {
       id: "price",
       label: "Price",
     },
@@ -136,6 +140,7 @@ const Users: NextPage | null = () => {
                   {row.id}
                 </TableCell>
                 <TableCell align="left">{row.symbol}</TableCell>
+                <TableCell align="left">{row.direction ? "<" : ">"}</TableCell>
                 <TableCell align="left">{row.price}</TableCell>
 
                 <ActionsCell
