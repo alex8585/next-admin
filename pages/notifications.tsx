@@ -46,6 +46,10 @@ const Users: NextPage | null = () => {
       id: "price",
       label: "Price",
     },
+    {
+      id: "sent",
+      label: "Sent",
+    },
   ]
 
   headCells.push({
@@ -142,6 +146,7 @@ const Users: NextPage | null = () => {
                 <TableCell align="left">{row.symbol}</TableCell>
                 <TableCell align="left">{row.direction ? "<" : ">"}</TableCell>
                 <TableCell align="left">{row.price}</TableCell>
+                <TableCell align="left">{row.sent ? "yes" : "no"}</TableCell>
 
                 <ActionsCell
                   canDelete={canDelete}

@@ -23,8 +23,20 @@ const style = {
   bgcolor: "background.paper",
 }
 
+interface DashboardType {
+  botUsername: string
+  botId: string
+  botName: string
+  chatId: string
+}
+
 const Home: NextPage = () => {
-  const [dashboard, setDashboard] = useState([])
+  const [dashboard, setDashboard] = useState<DashboardType>({
+    botUsername: "",
+    botId: "",
+    botName: "",
+    chatId: "",
+  })
 
   useEffect(() => {
     const url = "/api/v1/dashboard"
@@ -38,7 +50,7 @@ const Home: NextPage = () => {
   function handleConnect() {
     let url = `https://telegram.me/${dashboard.botUsername}`
     console.log(url)
-    window.open(url, "_blank").focus()
+    window.open(url, "_blank")!.focus()
   }
 
   return (
